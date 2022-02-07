@@ -9,7 +9,9 @@
     {% load cache %}
     {% cache 20 index_page page_obj.number %}
       {% include 'posts/includes/switcher.html' with index=True %}
-      {% include 'posts/includes/posts_list.html' %}
+      {% for post in page_obj %}
+        {% include 'posts/includes/posts_list.html' %}
+      {% endfor %}
     {% endcache %}
     {% include 'posts/includes/paginator.html' %}
   </div>
