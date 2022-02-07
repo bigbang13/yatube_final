@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block title %}
+  Custom 403csrf
+{% endblock %}
+{% block content %}
+  <h1>Custom 403csrf</h1>
+  <p>Custom CSRF check error. 403</p>
+  <a href="{% url 'posts:index' %}"> Идите на главную</a>
+{% endblock %}
