@@ -7,7 +7,7 @@
   <div class="container py-5">
     <h1>Лента подписок</h1>
     {% load cache %}
-    {% cache 20 follow_page %}
+    {% cache 20 follow_page page_obj.number %}
       {% include 'posts/includes/switcher.html' with follow=True  %}
       {% for post in page_obj %}
         {% include 'posts/includes/posts_list.html' %}

@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load thumbnail %}
 {% block title %}
-    {{ post|truncatechars:30 }}
+  {{ post|truncatechars:30 }}
 {% endblock %}
 {% block content %}
   <div class="row">
@@ -10,7 +10,7 @@
         <li class="list-group-item">
           Дата публикации: {{ post.pub_date|date:"d E Y" }} 
         </li>
-        {% if post.group.id != None %}
+        {% if post.group %}
           <li class="list-group-item">
             Группа: {{ post.group }}
             <a href="{% url 'posts:group_list' post.group.slug %}">

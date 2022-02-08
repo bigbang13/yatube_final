@@ -102,6 +102,7 @@ class PostPagesTests(TestCase):
         self.auth_client.force_login(self.user2)
         self.auth_client_notfollow = Client()
         self.auth_client_notfollow.force_login(self.user3)
+        cache.clear()
 
     def test_pages_uses_correct_template(self):
         """URL-адрес использует соответствующий шаблон."""
@@ -141,9 +142,6 @@ class PostPagesTests(TestCase):
             value = getattr(first_obj, attr)
             with self.subTest(value=value):
                 self.assertEqual(value, expected)
-        second_obj = response.context['posts'][0]
-        post1_text = second_obj.text
-        self.assertEqual(post1_text, POST_TEXT)
 
     def test_group_list_show_correct_context(self):
         """Шаблон group_list сформирован с правильным контекстом."""
@@ -268,7 +266,6 @@ class PostPagesTests(TestCase):
 
     def test_index_cache_content(self):
         """Шаблон index правильно кэшируется"""
-        cache.clear()
         post_cache = Post.objects.create(
             author=self.user,
             text=POST_CACHE_TEXT,
@@ -348,6 +345,16 @@ class PostPagesTests(TestCase):
         )
         page_context = response.context['page_obj'][0]
         self.assertEqual(page_context.text, self.post1.text)
+
+    def test_notfollow_index_user(self):
+        """Проверяем отсутствие постов в ленте, если не подписан."""
+        author = self.user
+        self.auth_client.get(
+            reverse(
+                'posts:profile_follow',
+                kwargs={'username': f'{author}'}
+            )
+        )
         response = self.auth_client_notfollow.get(
             reverse(
                 'posts:follow_index'
