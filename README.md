@@ -36,7 +36,7 @@ python3 manage.py createsuperuser
 
 ## Технологии
 - Python 3.7
-- Django 2.2.19
+- Django 2.2.16
 
 ### Автор
 
